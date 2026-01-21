@@ -5,7 +5,7 @@ services:
     image: alpine/git
     volumes:
       - workspace-data:/workspace-git
-    command: sh -c "rm -rf /workspace-git/* && git clone https://github.com/ВАШ_ЮЗЕР/ВАШ_РЕПО.git /workspace-git"
+    command: sh -c "rm -rf /workspace-git/* && git clone https://github.com/BinaryCat17/cadml.git /workspace-git"
 
   motor-pinn:
     image: nvcr.io/nvidia/physicsnemo/physicsnemo:25.11
