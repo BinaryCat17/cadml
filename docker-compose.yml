@@ -11,7 +11,7 @@ services:
               count: 1
               capabilities: [gpu]
     working_dir: /workspace
-    command: bash -c "sleep infinity"   # или "ls -la /workspace && sleep infinity" для теста
+    command: bash -c "sleep infinity"   # чтобы контейнер висел, можно было заходить
     ipc: host
     ulimits:
       memlock: -1
