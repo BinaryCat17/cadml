@@ -1,5 +1,7 @@
 ﻿FROM nvcr.io/nvidia/physicsnemo/physicsnemo:25.11
 
+RUN mkdir -p /root/.ssh && chmod 700 /root/.ssh
+
 # Устанавливаем SSH сервер
 RUN apt-get update && apt-get install -y openssh-server && \
     mkdir -p /var/run/sshd && \
