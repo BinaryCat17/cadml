@@ -6,6 +6,8 @@ services:
     entrypoint: [""]  # ← КЛЮЧЕВОЕ: отключаем git-entrypoint, чтобы sh/git работали нормально
     volumes:
       - workspace-data:/workspace
+      - ${SSH_AUTHORIZED_KEYS:-/dev/null}:/root/.ssh/authorized_keys:ro
+
     command: sh -c "rm -rf /workspace/* && git clone https://github.com/BinaryCat17/cadml.git /workspace"
 
   motor-pinn:
@@ -31,5 +33,5 @@ services:
     tty: true
 
 volumes:
-  - workspace-data:/workspace
-  - C:/Users/smirn/.ssh/authorized_keys:/root/.ssh/authorized_keys:ro
+  workspace-data:
+  
