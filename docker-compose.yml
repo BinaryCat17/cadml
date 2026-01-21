@@ -1,8 +1,25 @@
 ﻿version: '3.8'
 
 services:
+  cloner:
+    image: alpine/git
+    command: clone https://github.com/твой-юзер/твой-репо.git /workspace
+    volumes:
+      - workspace-data:/workspace
+
   motor-pinn:
     image: nvcr.io/nvidia/physicsnemo/physicsnemo:25.11
+    depends_on:
+      - cloner
+    volumes:
+      - workspace-data:/workspace
+    working_dir: /workspace
+    command: sleep infinity
+    ipc: host
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    shm_size: 2g
     deploy:
       resources:
         reservations:
@@ -10,15 +27,6 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    working_dir: /workspace
-    command: bash -c "sleep infinity"   # чтобы контейнер висел, можно было заходить
-    ipc: host
-    ulimits:
-      memlock: -1
-      stack: 67108864
-    shm_size: 2g
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=all
-    restart: unless-stopped
-    tty: true
-    
+
+volumes:
+  workspace-data:
