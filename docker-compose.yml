@@ -10,16 +10,15 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    volumes:
-      - .:/workspace
     working_dir: /workspace
-    command: bash -c "sleep infinity"  # ← контейнер не выходит, можно заходить в консоль
-    ipc: host  # для SHMEM
+    command: bash -c "sleep infinity"   # или "ls -la /workspace && sleep infinity" для теста
+    ipc: host
     ulimits:
       memlock: -1
       stack: 67108864
-    shm_size: 2g  # для больших моделей
+    shm_size: 2g
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
-    restart: unless-stopped  # авторестарт при ребутах
+    restart: unless-stopped
     tty: true
+    
