@@ -2,8 +2,7 @@
 
 services:
   motor-pinn:
-    image: nvcr.io/nvidia/physicsnemo/physicsnemo:25.11  # ← use this instead of :latest
-    runtime: nvidia
+    image: nvcr.io/nvidia/physicsnemo/physicsnemo:25.11
     deploy:
       resources:
         reservations:
@@ -14,8 +13,13 @@ services:
     volumes:
       - .:/workspace
     working_dir: /workspace
-    command: python train.py
+    command: bash -c "sleep infinity"  # ← контейнер не выходит, можно заходить в консоль
+    ipc: host  # для SHMEM
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    shm_size: 2g  # для больших моделей
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
-    restart: unless-stopped
+    restart: unless-stopped  # авторестарт при ребутах
     tty: true
