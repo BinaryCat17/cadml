@@ -4,7 +4,7 @@
 RUN apt-get update && apt-get install -y openssh-server && \
     mkdir -p /var/run/sshd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \  # отключаем пароль, только ключи
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
     rm -rf /var/lib/apt/lists/*
 
 # Создаём директорию для ключей root
