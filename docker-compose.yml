@@ -1,0 +1,21 @@
+﻿version: '3.8'
+
+services:
+  motor-pinn:
+    image: nvcr.io/nvidia/physicsnemo/physicsnemo:latest  # официальный образ с PhysicsNeMo + PyTorch + CUDA
+    runtime: nvidia  # для старых версий Docker, альтернатива ниже
+    deploy:  # современный способ для GPU (работает в Docker Desktop 4.15+)
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+      - .:/workspace  # монтируем текущую папку с кодом в контейнер
+    working_dir: /workspace
+    command: python train.py  # запускаем обучение сразу
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    restart: unless-stopped  # авторестарт при краше или ребутах
+    tty: true  # для интерактивного режима, если нужно
