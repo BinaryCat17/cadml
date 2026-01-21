@@ -2,19 +2,20 @@
 
 services:
   cloner:
-    image: alpine/git
+    image: alpine/git:latest
+    entrypoint: [""]  # ← КЛЮЧЕВОЕ: отключаем git-entrypoint, чтобы sh/git работали нормально
     volumes:
-      - workspace-data:/workspace-git
-    command: sh -c "rm -rf /workspace-git/* && git clone https://github.com/BinaryCat17/cadml.git /workspace-git"
+      - workspace-data:/workspace
+    command: sh -c "rm -rf /workspace/* && git clone https://github.com/BinaryCat17/cadml.git /workspace"
 
   motor-pinn:
     image: nvcr.io/nvidia/physicsnemo/physicsnemo:25.11
     depends_on:
       - cloner
     volumes:
-      - workspace-data:/workspace-git  # монтируем склонированный repo
-    working_dir: /workspace-git
-    command: sleep infinity
+      - workspace-data:/workspace
+    working_dir: /workspace
+    command: sleep infinity  # или python train.py, когда всё проверишь
     ipc: host
     ulimits:
       memlock: -1
