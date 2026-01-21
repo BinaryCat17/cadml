@@ -9,13 +9,12 @@ services:
     command: sh -c "rm -rf /workspace/* && git clone https://github.com/BinaryCat17/cadml.git /workspace"
 
   motor-pinn:
-    image: nvcr.io/nvidia/physicsnemo/physicsnemo:25.11
-    depends_on:
-      - cloner
+    build: .  # сборка из Dockerfile в текущей папке
     volumes:
       - workspace-data:/workspace
     working_dir: /workspace
-    command: sleep infinity  # или python train.py, когда всё проверишь
+    ports:
+      - "2222:22"  # SSH на порту 2222 хоста
     ipc: host
     ulimits:
       memlock: -1
@@ -28,8 +27,9 @@ services:
             - driver: nvidia
               count: 1
               capabilities: [gpu]
-    tty: true
     restart: unless-stopped
+    tty: true
 
 volumes:
-  workspace-data:
+  - workspace-data:/workspace
+  - C:\Users\smirn\.ssh\authorized_keys:/root/.ssh/authorized_keys:ro

@@ -1,6 +1,6 @@
 ﻿import torch
 from physicsnemo.sym.geometry.primitives_3d import Cylinder
-from physicsnemo.sym.eq.pdes.linear_elasticity import Laplace
+from physicsnemo.sym.eq.pdes.basic import Laplace
 from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import PointwiseConstraint
 from physicsnemo.sym.models.fourier_net import FourierNetArch
