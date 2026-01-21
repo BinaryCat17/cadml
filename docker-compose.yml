@@ -32,4 +32,4 @@ services:
 
 volumes:
   - workspace-data:/workspace
-  - C:\Users\smirn\.ssh\authorized_keys:/root/.ssh/authorized_keys:ro
+  - C:/Users/smirn/.ssh/authorized_keys:/root/.ssh/authorized_keys:ro
