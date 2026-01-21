@@ -14,6 +14,7 @@ services:
     build: .  # сборка из Dockerfile в текущей папке
     volumes:
       - workspace-data:/workspace
+      - ${SSH_AUTHORIZED_KEYS}:/root/.ssh:ro
     working_dir: /workspace
     ports:
       - "2222:22"  # SSH на порту 2222 хоста
